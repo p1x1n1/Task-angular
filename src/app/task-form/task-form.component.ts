@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, numberAttribute, signal } from '@angular/core';
 import { Task } from '../task';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-task-form',
@@ -12,19 +13,19 @@ export class TaskFormComponent implements OnInit {
   //@Input({{transform: (numberTask:unknown) -> numberAttribute(numberTask,42)}}) numberTask = 0;
   @Input() numberTask: number = 1;
   //tasks: Task[] =[] ;
-  newTask: Task = {
-    number: 0,
-    type: '',
-    priority: '',
-    status: '',
-    title: '',
-    description: '',
-    assignee: '',
-    creator: '',
-    created: 0,
-    updated: 0
-  };
-  
+
+  taskForm = new FormGroup<Task>({
+      number: new FormControl(0,{nonNullable: true}),
+      type: new FormControl('' ,{nonNullable: true}),
+      priority: new FormControl('', ),
+      status: new FormControl('' ,{nonNullable: true}),
+      title: new FormControl('' ,{nonNullable: true}),
+      description: new FormControl('' ,{nonNullable: true}),
+      assignee: new FormControl('' ,{nonNullable: true}),
+      creator: new FormControl('' ,{nonNullable: true}),
+      created: new FormControl(new Date() ,{nonNullable: true}),
+      updated: new FormControl()
+  });
   constructor() { 
     //this.newTask.number = Math.floor(Math.random() * 10000);
     
@@ -46,41 +47,21 @@ export class TaskFormComponent implements OnInit {
     "closed":"Закрыто" ,
 
   }
-  /*cnt : number = 0;
-  number = 0;
-  type= '';
-  priority= '';
-  status= '';
-  title= '';
-  description= '';
-  assignee= '';
-  creator= '';
-  created= 0;
-  updated= 0;*/
-  
   ngOnInit(): void {
+    this.taskForm.controls['number'] = new FormControl<number>(this.numberTask,{nonNullable: true});
     // Генерировать номер в момент инициализации формы
-    this.newTask.number = this.numberTask;
-    this.newTask.created = new Date().getTime();
+    //this.newTask.number = this.numberTask;
+    //this.newTask.created = new Date().getTime();
     // Установить текущее время в качестве времени создания и последнего изменения
   }
   OnSubmit ()  {
-    this.newTask.updated = new Date().getTime();
-    this.SubmitTask.emit(this.newTask);
+    if (this.taskForm.valid) {
+    const task = this.taskForm.getRawValue();
+    task.updated = new Date();
+    console.log(task);
+    this.SubmitTask.emit(task);
+    }
     // Установить текущее время в качестве времени создания и последнего изменение
-  }
-  OnreInitForm() {
-    console.log('вызван в дочернем')
-    //this.newTask.number = Math.floor(Math.random() * 10000);
-     this.newTask.type= '';
-     this.newTask.priority= '';
-     this.newTask.status= '';
-     this.newTask.title= '';
-     this.newTask.description= '';
-     this.newTask.assignee= '';
-     this.newTask.creator= '';
-     this.newTask.created = new Date().getDate();
-     this.newTask.updated = this.newTask.created;
   }
 }
 

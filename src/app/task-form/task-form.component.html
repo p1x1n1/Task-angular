@@ -1,11 +1,11 @@
-<form>
+<form [formGroup]="taskForm" (ngSubmit)="OnSubmit()">
   <div class="mb-3">
     <label for="number" class="form-label">Номер</label>
-    <input type="number" class="form-control" id="number" name="number" readonly [(ngModel)]="newTask.number">
+    <input type="number" class="form-control" id="number" formControlName="number" readonly>
   </div>
   <div class="mb-3">
-    <label for="type" class="form-label">Тип</label>
-    <select class="form-select" id="type" name="type" [(ngModel)]="newTask.type" required>
+    <label for="type" class="form-label">Тип (обязательное поле)</label>
+    <select class="form-select" id="type" formControlName="type" >
       <option *ngFor="let t of type_ | keyvalue" [value]="t.key">
         {{t.value}}
       </option>
@@ -13,43 +13,42 @@
   </div>
   <div class="mb-3">
     <label for="priority" class="form-label">Приоритет</label>
-    <select class="form-select" id="priority" name="priority" [(ngModel)]="newTask.priority" required>
+    <select class="form-select" id="priority" formControlName="priority" >
       <option *ngFor="let p of priority | keyvalue" [value]="p.key"><!--keyvallue-pipe-->
         {{p.value}}
       </option>
     </select>
   </div>
   <div class="mb-3">
-    <label for="status" class="form-label">Статус</label>
-    <select class="form-select" id="status" name="status" [(ngModel)]="newTask.status" required>
+    <label for="status" class="form-label">Статус  (обязательное поле)</label>
+    <select class="form-select" id="status" formControlName="status"  required>
       <option *ngFor="let s of status_ | keyvalue" [value]="s.key">
         {{s.value}}
       </option>
     </select>
   </div>
     <div class="mb-3">
-      <label for="title" class="form-label">Заголовок</label>
-      <input type="text" class="form-control" id="title" name="title" [(ngModel)]="newTask.title" required>
+      <label for="title" class="form-label">Заголовок  (обязательное поле)</label>
+      <input type="text" class="form-control" id="title" formControlName="title"  required>
     </div>
     <div class="mb-3">
       <label for="description" class="form-label">Описание</label>
-      <textarea class="form-control" id="description" name="description" [(ngModel)]="newTask.description"></textarea>
+      <textarea class="form-control" id="description" formControlName="description" ></textarea>
     </div>
     <div class="mb-3">
       <label for="assignee" class="form-label">Исполнитель</label>
-      <input type="text" class="form-control" id="assignee" name="assignee" [(ngModel)]="newTask.assignee">
+      <input type="text" class="form-control" id="assignee" formControlName="assignee" >
     </div>
     <div class="mb-3">
-      <label for="creator" class="form-label">Создатель</label>
-      <input type="text" class="form-control" id="creator" name="creator" [(ngModel)]="newTask.creator" required>
+      <label for="creator" class="form-label">Создатель  (обязательное поле)</label>
+      <input type="text" class="form-control" id="creator" formControlName="creator" >
     </div>
     <div class="mb-3">
       <label for="created" class="form-label">Дата создания</label>
-      <input type="datetime" class="form-control" id="created" name="created" [(ngModel)]="newTask.created" readonly>
+      <input type="datetime" class="form-control" id="created" formControlName="created" readonly >
     </div>
-    <div class="mb-3">
-      <label for="updated" class="form-label">Дата последнего изменения</label>
-      <input type="datetime" class="form-control" id="updated" name="updated" #upD="ngModel" [(ngModel)]="newTask.updated" readonly>
+    <div *ngIf="taskForm.invalid">
+      <p>Не все обязательные поля заполнены!</p>
     </div>
-    <button (click)="OnSubmit()" [disabled]="upD.invalid" type="submit" class="btn btn-primary">Сохранить</button>
+    <button [disabled]="taskForm.invalid" type="submit" class="btn btn-primary">Сохранить</button>
   </form>

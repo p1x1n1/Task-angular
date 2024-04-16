@@ -1,15 +1,17 @@
-import { WritableSignal } from "@angular/core";
+import { FormControl } from "@angular/forms";
+import { Data } from "@angular/router";
 
-  export class Task{
-    constructor(
-      public number: number,
-      public type: string,
-      public status: string,
-      public priority: string,
-      public title: string,
-      public description: string,
-      public assignee: string,
-      public creator: string,
-      public created: number ,
-      public updated: number ){}
+
+  export interface Task{
+   
+        number: FormControl <number>,
+        type: FormControl<string>,
+        status: FormControl<string>,
+        priority: FormControl<string|null>,
+        title: FormControl<string>,
+        description: FormControl<string|null>,
+        assignee: FormControl<string|null>,
+        creator: FormControl<string>,
+        created:  FormControl <Data>,
+        updated:  FormControl <Data>,
   }

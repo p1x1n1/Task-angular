@@ -38,8 +38,8 @@
           <td>{{task.description}}</td>
           <td>{{task.assignee}}</td>
           <td>{{task.creator}}</td>
-          <td>{{task.created | date:'medium'}}</td>
-          <td>{{task.updated | date:'medium'}}</td>
+          <td>{{task.created }}</td><!--| date:'medium'-->
+          <td>{{task.updated }}</td>
         </tr>
       </tbody>
     </table>
@@ -53,8 +53,8 @@
             <p class="card-text">{{task.description}}</p>
             <p>Исполнитель: {{task.assignee}}</p>
             <p>Создатель: {{task.creator}}</p>
-            <p>Дата создания: {{task.created | date:'medium'}}</p>
-            <p>Дата последнего изменения: {{task.updated | date:'medium'}}</p>
+            <p>Дата создания: {{task.created}}</p>
+            <p>Дата последнего изменения: {{task.updated}}</p>
           </div>
         </div>
       </div>
