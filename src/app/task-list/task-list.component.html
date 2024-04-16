@@ -1,0 +1,62 @@
+<div class="content">
+  <div class="left">
+    <h1>Текущие задачи</h1>
+    <div class="right">
+      <button *ngIf="!showForm()" (click)="click()">Добавить задачу</button>
+      <div *ngIf="showForm()">
+        <app-task-form (SubmitTask)="receiveTaskData($event)" [numberTask]="counter()"></app-task-form>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Номер<th>
+          <th>Задача</th>
+          <th>Тип</th>
+          <th>Приоритет</th>
+          <th>Статус</th>
+          <th>Описание</th>
+          <th>Исполнитель</th>
+          <th>Создатель</th>
+          <th>Дата создания</th>
+          <th>Дата последнего изменения</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks">
+          <td>{{task.number}}<td>
+          <td>{{task.title}}</td>
+          <td>
+            {{task.type}}
+          </td>
+          <td>
+            {{task.priority}}
+          </td>
+          <td>
+           {{task.status}}
+          </td>
+          <td>{{task.description}}</td>
+          <td>{{task.assignee}}</td>
+          <td>{{task.creator}}</td>
+          <td>{{task.created | date:'medium'}}</td>
+          <td>{{task.updated | date:'medium'}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngFor="let task of tasks">
+        <div class="card mb-3">
+          <div class="card-header">
+            <h5 class="card-title">{{task.title}}</h5>
+            <span class="badge bg-{{task.priority}}">{{task.priority}}</span>
+          </div>
+          <div class="card-body">
+            <p class="card-text">{{task.description}}</p>
+            <p>Исполнитель: {{task.assignee}}</p>
+            <p>Создатель: {{task.creator}}</p>
+            <p>Дата создания: {{task.created | date:'medium'}}</p>
+            <p>Дата последнего изменения: {{task.updated | date:'medium'}}</p>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
